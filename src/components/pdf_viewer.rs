@@ -95,7 +95,7 @@ pub fn PdfViewer(
             <div class="pdf-canvas-wrapper" style=move || {
                 format!("width:{}px;height:{}px", canvas_width.get(), canvas_height.get())
             }>
-                <canvas id="pdf-canvas" on:click=move |ev: web_sys::MouseEvent| ev.stop_propagation() />
+                <canvas id="pdf-canvas" />
             </div>
             <div class="notes-overlay">
                 {move || page_notes().into_iter().map(|note| {

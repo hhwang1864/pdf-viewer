@@ -23,6 +23,8 @@ pub fn StickyNote(
     let (local_content, set_local_content) = signal(note.content.clone());
 
     let (dragging, set_dragging) = signal(false);
+    let (drag_offset_x, set_drag_offset_x) = signal(0.0f64);
+    let (drag_offset_y, set_drag_offset_y) = signal(0.0f64);
 
     let on_click = move |ev: web_sys::MouseEvent| {
         ev.stop_propagation();
@@ -60,7 +62,17 @@ pub fn StickyNote(
         ev.stop_propagation();
         set_dragging.set(true);
 
-        // nothing extra needed
+        // Calculate offset between mouse and note position so it doesn't jump
+        let window = web_sys::window().unwrap();
+        let document = window.document().unwrap();
+        if let Some(area) = document.query_selector(".pdf-area").ok().flatten() {
+            let area_el: web_sys::HtmlElement = area.dyn_into().unwrap();
+            let rect = area_el.get_bounding_client_rect();
+            let mouse_x = ev.client_x() as f64 - rect.left() + area_el.scroll_left() as f64;
+            let mouse_y = ev.client_y() as f64 - rect.top() + area_el.scroll_top() as f64;
+            set_drag_offset_x.set(mouse_x - x_pos.get_untracked());
+            set_drag_offset_y.set(mouse_y - y_pos.get_untracked());
+        }
 
         let note_id_up = note_id_drag.clone();
 
@@ -72,8 +84,8 @@ pub fn StickyNote(
                 if let Some(area) = document.query_selector(".pdf-area").ok().flatten() {
                     let area_el: web_sys::HtmlElement = area.dyn_into().unwrap();
                     let rect = area_el.get_bounding_client_rect();
-                    let px = ev.client_x() as f64 - rect.left() + area_el.scroll_left() as f64;
-                    let py = ev.client_y() as f64 - rect.top() + area_el.scroll_top() as f64;
+                    let px = ev.client_x() as f64 - rect.left() + area_el.scroll_left() as f64 - drag_offset_x.get_untracked();
+                    let py = ev.client_y() as f64 - rect.top() + area_el.scroll_top() as f64 - drag_offset_y.get_untracked();
                     let px = px.max(0.0);
                     let py = py.max(0.0);
                     set_x_pos.set(px);
