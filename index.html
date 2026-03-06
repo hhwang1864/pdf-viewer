@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Viewer</title>
+    <link data-trunk rel="css" href="styles/main.css" />
+    <link data-trunk rel="css" href="styles/themes.css" />
+    <link data-trunk rel="css" href="styles/toolbar.css" />
+    <link data-trunk rel="css" href="styles/notes.css" />
+    <link data-trunk rel="css" href="styles/pdf.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.9.155/pdf.min.mjs" type="module"></script>
+    <link data-trunk rel="copy-file" href="js/pdf_bridge.js" />
+    <link data-trunk rel="rust" data-wasm-opt="z" />
+</head>
+<body>
+    <script type="module" src="js/pdf_bridge.js"></script>
+</body>
+</html>
