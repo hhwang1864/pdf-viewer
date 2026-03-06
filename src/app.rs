@@ -115,6 +115,7 @@ pub fn App() -> impl IntoView {
                 total_pages=total_pages
                 zoom=zoom
                 theme=theme
+                notes=notes
                 set_current_page=set_current_page
                 set_zoom=set_zoom
                 set_theme=set_theme

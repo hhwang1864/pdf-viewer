@@ -17,10 +17,31 @@
     z-index: 20;
 }
 
+.sticky-note.dragging {
+    opacity: 0.8;
+    z-index: 100;
+    cursor: grabbing;
+    box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.4);
+}
+
 .sticky-note-header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 4px;
+    cursor: grab;
+    user-select: none;
+}
+
+.sticky-note-drag {
+    font-size: 0.7rem;
+    opacity: 0.4;
+    padding: 2px 4px;
+    cursor: grab;
+}
+
+.sticky-note-drag:hover {
+    opacity: 0.8;
 }
 
 .sticky-note-delete {

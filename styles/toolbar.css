@@ -17,6 +17,11 @@
     gap: 8px;
 }
 
+.nav-group {
+    flex: 1;
+    min-width: 200px;
+}
+
 .toolbar-btn {
     display: flex;
     align-items: center;
@@ -30,6 +35,7 @@
     cursor: pointer;
     font-size: 1rem;
     transition: background 0.15s;
+    flex-shrink: 0;
 }
 
 .toolbar-btn:hover {
@@ -46,8 +52,63 @@
     border-color: #3b82f6;
 }
 
+.toolbar-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.save-btn {
+    background: #10b981;
+    color: white;
+    border-color: #10b981;
+}
+
+.save-btn:hover:not(:disabled) {
+    background: #059669;
+}
+
+.save-status {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.page-slider {
+    flex: 1;
+    min-width: 100px;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+
+.page-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.page-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
 .page-input {
-    width: 60px;
+    width: 50px;
     padding: 6px 8px;
     border: 1px solid var(--input-border);
     border-radius: 6px;
