@@ -124,9 +124,9 @@ pub fn App() -> impl IntoView {
             />
 
             <div class="main-content">
-                <div class="pdf-area">
-                    {move || if !pdf_loaded.get() {
-                        view! {
+                {move || if !pdf_loaded.get() {
+                    view! {
+                        <div class="pdf-area">
                             <div class="upload-area">
                                 <h2>"Open a PDF"</h2>
                                 <div class="upload-options">
@@ -151,22 +151,22 @@ pub fn App() -> impl IntoView {
                                     </form>
                                 </div>
                             </div>
-                        }.into_any()
-                    } else {
-                        view! {
-                            <PdfViewer
-                                current_page=current_page
-                                zoom=zoom
-                                notes=notes
-                                set_notes=set_notes
-                                pdf_hash=pdf_hash
-                                editing_note=editing_note
-                                set_editing_note=set_editing_note
-                                selected_color=selected_color
-                            />
-                        }.into_any()
-                    }}
-                </div>
+                        </div>
+                    }.into_any()
+                } else {
+                    view! {
+                        <PdfViewer
+                            current_page=current_page
+                            zoom=zoom
+                            notes=notes
+                            set_notes=set_notes
+                            pdf_hash=pdf_hash
+                            editing_note=editing_note
+                            set_editing_note=set_editing_note
+                            selected_color=selected_color
+                        />
+                    }.into_any()
+                }}
 
                 {move || if sidebar_open.get() {
                     view! {

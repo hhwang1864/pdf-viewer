@@ -1,15 +1,16 @@
 .sticky-note {
     position: absolute;
-    width: 160px;
+    width: 180px;
     min-height: 80px;
     padding: 4px;
     border-radius: 4px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     font-size: 0.8rem;
-    transform: translate(-50%, -100%);
     z-index: 10;
     transition: box-shadow 0.15s;
+    resize: both;
+    overflow: auto;
 }
 
 .sticky-note:hover {
@@ -69,10 +70,11 @@
 
 .sticky-note-input {
     width: 100%;
+    height: calc(100% - 24px);
     min-height: 60px;
     border: none;
     background: transparent;
-    resize: vertical;
+    resize: none;
     font-family: inherit;
     font-size: 0.8rem;
     padding: 4px;

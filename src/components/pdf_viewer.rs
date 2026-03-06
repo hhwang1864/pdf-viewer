@@ -41,18 +41,23 @@ pub fn PdfViewer(
         }
     });
 
-    let on_canvas_click = move |ev: web_sys::MouseEvent| {
+    // Click anywhere in the pdf-area to place a note (pixel coords relative to .pdf-area)
+    let on_area_click = move |ev: web_sys::MouseEvent| {
         let hash = pdf_hash.get();
         if hash.is_empty() {
             return;
         }
 
-        // Get click position relative to canvas
-        let target = ev.target().unwrap();
-        let canvas = target.dyn_into::<web_sys::HtmlCanvasElement>().unwrap();
-        let rect = canvas.get_bounding_client_rect();
-        let x = (ev.client_x() as f64 - rect.left()) / rect.width();
-        let y = (ev.client_y() as f64 - rect.top()) / rect.height();
+        // Get the .pdf-area element
+        let window = web_sys::window().unwrap();
+        let document = window.document().unwrap();
+        let area = document.query_selector(".pdf-area").ok().flatten().unwrap();
+        let area_rect = area.get_bounding_client_rect();
+
+        // Pixel position within the scrollable area
+        let area_el: web_sys::HtmlElement = area.dyn_into().unwrap();
+        let x = ev.client_x() as f64 - area_rect.left() + area_el.scroll_left() as f64;
+        let y = ev.client_y() as f64 - area_rect.top() + area_el.scroll_top() as f64;
 
         let page = current_page.get_untracked();
         let color = selected_color.get_untracked();
@@ -86,27 +91,25 @@ pub fn PdfViewer(
     };
 
     view! {
-        <div class="pdf-container">
+        <div class="pdf-area" on:click=on_area_click>
             <div class="pdf-canvas-wrapper" style=move || {
                 format!("width:{}px;height:{}px", canvas_width.get(), canvas_height.get())
             }>
-                <canvas id="pdf-canvas" on:click=on_canvas_click />
-                <div class="notes-overlay">
-                    {move || page_notes().into_iter().map(|note| {
-                        let note_id = note.id.clone();
-                        let is_editing = move || editing_note.get().as_deref() == Some(&note_id);
-                        view! {
-                            <crate::components::sticky_note::StickyNote
-                                note=note.clone()
-                                is_editing=Signal::derive(is_editing)
-                                set_editing_note=set_editing_note
-                                set_notes=set_notes
-                                canvas_width=canvas_width
-                                canvas_height=canvas_height
-                            />
-                        }
-                    }).collect_view()}
-                </div>
+                <canvas id="pdf-canvas" on:click=move |ev: web_sys::MouseEvent| ev.stop_propagation() />
+            </div>
+            <div class="notes-overlay">
+                {move || page_notes().into_iter().map(|note| {
+                    let note_id = note.id.clone();
+                    let is_editing = move || editing_note.get().as_deref() == Some(&note_id);
+                    view! {
+                        <crate::components::sticky_note::StickyNote
+                            note=note.clone()
+                            is_editing=Signal::derive(is_editing)
+                            set_editing_note=set_editing_note
+                            set_notes=set_notes
+                        />
+                    }
+                }).collect_view()}
             </div>
         </div>
     }
