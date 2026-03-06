@@ -5,4 +5,4 @@ compatibility_date = "2024-12-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "pdf-viewer-notes"
-database_id = "placeholder-replace-with-actual-id"
+database_id = "97094fe9-a128-4d9c-8757-23ef17e2041b"

@@ -1,7 +1,7 @@
 use crate::models::Note;
 use gloo_net::http::Request;
 
-const API_BASE: &str = "/api";
+const API_BASE: &str = "https://pdf-viewer-api.hhojin1864.workers.dev/api";
 
 pub async fn fetch_notes(pdf_hash: &str, page: Option<u32>) -> Result<Vec<Note>, String> {
     let mut url = format!("{}/notes?pdf_hash={}", API_BASE, pdf_hash);

@@ -1,9 +1,9 @@
 /target
 /dist
-/worker/node_modules
+node_modules
 .wrangler
 *.wasm
-
+bun.lock
 .dev.vars*
 !.dev.vars.example
 .env*
