@@ -97,6 +97,10 @@ pdf-viewer/
         └── routes/notes.ts    # REST endpoints for notes
 ```
 
+## WebAssembly Deep Dive
+
+New to WASM? Read **[WebAssembly Explained](docs/wasm-explained.md)** — covers how WASM works, how it's different from JavaScript, the build pipeline, performance tradeoffs, security model, and when to use which.
+
 ## Detailed File Documentation
 
 Each file has its own README in the `docs/` folder with line-by-line explanations:
